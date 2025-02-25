@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+
+  --font-display: 'Roboto', sans-serif;
+  --font-body: 'Roboto', sans-serif;
+
+  --color-dark-blue: #4C649A;
+  --color-light-blue: #A7C0E8;
+  --color-light-gray: #CED9ED;
+  --color-light-white: #E7ECF2;
+
+  --animate-spinY: spinY 1.5s linear infinite;
+
+  @keyframes spinY {
+    0% {
+      transform: perspective(200px) rotateY(0deg);
+    }
+
+    25% {
+      transform: perspective(250px) rotateY(90deg);
+    }
+
+    50% {
+      transform: perspective(300px) rotateY(180deg);
+    }
+
+    75% {
+      transform: perspective(350px) rotateY(270deg);
+    }
+
+    100% {
+      transform: perspective(400px) rotateY(360deg);
+    }
+  }
+
+}
+
+body {
+  @apply font-body;
+}
