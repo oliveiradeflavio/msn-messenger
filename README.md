@@ -2,7 +2,10 @@
 
 ### Sobre o Projeto
 
-O projeto esta sendo desenvolvido no momento, sendo utilizado as tecnologias React.JS, Tailwindcss, Vite e C#. O projeto é um clone do antigo MSN Messenger, mas rodando via web. O projeto tem como objetivo aprimorar meus conhecimentos em React.JS e C#.
+O projeto esta sendo desenvolvido no momento, sendo utilizado as tecnologias React.JS, Tailwindcss, Vite e C#.
+
+O projeto é um clone do antigo MSN Messenger, mas rodando via web. O projeto tem como objetivo aprimorar meus conhecimentos em React.JS e C#.
+
 No front-end estou utilizando React.JS com Tailwindcss e Vite, e no back-end estou utilizando C# com .NetCore.
 
 #### Tecnologias Utilizadas
