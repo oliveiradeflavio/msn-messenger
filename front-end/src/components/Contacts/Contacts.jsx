@@ -1,9 +1,13 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
+
+// components
+import WindowChat from "../WindowChat/WindowChat";
 
 // Exportação nomeada da função generateContacts
 export const generateContacts = () => {
   const onlineNames = [
-    "Xx_Angela_xX", "MegaMaster92", "DiaboLoiro", "Super_Gato", "Kauã_Storm",
+    "Xx_Angela_xX", "MegaMaster92", "ZéDaUnha", "Super_Gato", "Kauã_Storm",
     "Mestre_13", "Lulu_dark", "Hacker404", "BelezaTotal", "GuerreiroDoFuturo",
     "Punky_Queen", "SkaterManiac", "Gothico_666", "ThunderBoy_15", "Twilight_Star",
     "DarkKnight_X", "ElGato_92", "Iron_Lady", "Xx_Corinthians_xX", "FreakyJoker",
@@ -36,26 +40,48 @@ export const generateContacts = () => {
   return [...onlineContacts, ...offlineContacts];
 };
 
+
 const Contacts = ({ status }) => {
+
+  // estado para armazenar o contato selecionado e enviar depois para o componente WindowChat
+  const [selectedContact, setSelectedContact] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleWindowChat = (id, name) => {
+    setSelectedContact({ id, name });
+  }
 
   const contacts = generateContacts();
   const contactsStatus = contacts.map((contact) => {
     if (contact.status === status) {
       return (
-        <li key={contact.id} className="text-gray-600">
+        <li key={contact.id} className="text-gray-600 cursor-pointer" onClick={() => handleWindowChat(contact.id, contact.name)}>
           {contact.name}
         </li>
       );
     }
   });
 
+  // Função para fechar o modal
+  const handleCloseWindow = () => {
+    setIsModalOpen(false);
+    setSelectedContact(null);
+  };
+
   return (
     <div>
       {contacts
         ? (
-          <ul className="list-none list-inside">
-            {contactsStatus}
-          </ul>
+          <>
+            <ul className="list-none list-inside">
+              {contactsStatus}
+            </ul>
+
+            {/* Com o contato armazenado é passado para o componente */}
+            {selectedContact && (
+              <WindowChat id={selectedContact.id} name={selectedContact.name} onClose={handleCloseWindow} />
+            )}
+          </>
         )
         : (
           <p>Nenhum contato online</p>
