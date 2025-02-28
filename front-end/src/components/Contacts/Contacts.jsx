@@ -44,12 +44,32 @@ export const generateContacts = () => {
 const Contacts = ({ status }) => {
 
   // estado para armazenar o contato selecionado e enviar depois para o componente WindowChat
-  const [selectedContact, setSelectedContact] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [openChats, setOpenChats] = useState([]);//array para armazenar as janelas abertas
 
+  // Função para abrir a janela de chat
   const handleWindowChat = (id, name) => {
-    setSelectedContact({ id, name });
-  }
+    setOpenChats((prev) => {
+      // Se o contato já tem uma janela aberta, não faz nada
+      if (prev.find((chat) => chat.id === id)) {
+        return prev;
+      }
+
+      // Define a posição da nova janela
+      const newPosition = {
+        top: 50 + prev.length * 20, // Deslocamento progressivo
+        left: 100 + (prev.length % 2) * 200, // Alterna entre 100 e 300
+      };
+
+      return [...prev, { id, name, position: newPosition }];
+    });
+  };
+
+
+  // Função para fechar a janela de chat 
+  const handleCloseWindow = (id) => {
+    // remover apenas a janela que está sendo fechada
+    setOpenChats((prev) => prev.filter((chat) => chat.id !== id));
+  };
 
   const contacts = generateContacts();
   const contactsStatus = contacts.map((contact) => {
@@ -62,12 +82,6 @@ const Contacts = ({ status }) => {
     }
   });
 
-  // Função para fechar o modal
-  const handleCloseWindow = () => {
-    setIsModalOpen(false);
-    setSelectedContact(null);
-  };
-
   return (
     <div>
       {contacts
@@ -77,10 +91,16 @@ const Contacts = ({ status }) => {
               {contactsStatus}
             </ul>
 
-            {/* Com o contato armazenado é passado para o componente */}
-            {selectedContact && (
-              <WindowChat id={selectedContact.id} name={selectedContact.name} onClose={handleCloseWindow} />
-            )}
+            {/* Renderiza múltiplas janelas abertas */}
+            {openChats.map((chat) => (
+              <WindowChat
+                key={chat.id}
+                id={chat.id}
+                name={chat.name}
+                onClose={() => handleCloseWindow(chat.id)}
+                positionWindow={chat.position}
+              />
+            ))}
           </>
         )
         : (

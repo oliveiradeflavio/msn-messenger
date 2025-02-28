@@ -79,8 +79,8 @@ const Login = () => {
             <div className='mt-2 text-dark-blue'>
               <div className='mb-3'>
                 <label htmlFor="">Email:</label>
-                <div className='flex '>
-                  <input type="email" name="email" value={email} required className='border-2 border-light-blue bg-white rounded-lg p-2 focus:outline-none  focus:ring-dark-blue focus:border-dark-blue transition duration-200'
+                <div className='flex'>
+                  <input type="email" name="email" value={email} required className='w-60 border-2 border-light-blue bg-white rounded-lg p-2 focus:outline-none  focus:ring-dark-blue focus:border-dark-blue transition duration-200'
                     onChange={(e) => setEmail(e.target.value)} />
                   <AiFillDownSquare className='font-extrabold text-3xl text-white hover:bg-dark-blue cursor-pointer' />
                 </div>

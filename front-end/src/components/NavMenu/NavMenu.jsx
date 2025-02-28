@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 //imagens
 import logoHeader from '../../assets/img/logo-msn.png'
@@ -11,6 +11,15 @@ const NavMenu = () => {
   const handleLogOff = () => {
     navigate('/');
   }
+
+  //Verificação de página, se for a de login, o menu vai ter alguns disabilitados
+  const pages = {
+    '/': '/',
+    '/chat': '/chat',
+  }
+  const location = useLocation();
+  const currentPage = location.pathname;
+
 
   return (
 
@@ -48,37 +57,62 @@ const NavMenu = () => {
           <li className='hover:bg-light-blue rounded relative group'>
             <Link to="#" className='p-2'>Arquivo</Link>
             {/* Dropdown */}
-            <ul className="absolute left-0 mt-1 hidden group-hover:block bg-white border border-gray-300 shadow-md w-30">
-              <li><Link to="#" className="block px-4 py-2 hover:bg-blue-200">Novo</Link></li>
-              <li><Link to="#" className="block px-4 py-2 hover:bg-blue-200">Abrir</Link></li>
-              <li><Link to="#" className="block px-4 py-2 hover:bg-blue-200">Salvar</Link></li>
-            </ul>
+            {pages[currentPage] === '/' && (
+              <ul className="absolute left-0 mt-1 hidden group-hover:block bg-white border border-gray-300 shadow-md w-50">
+                <li><Link to="#" className="block px-4 py-2 hover:bg-blue-200">Criar uma nova conta</Link></li>
+                <li><Link to="#" className="block px-4 py-2 hover:bg-blue-200">Status serviço</Link></li>
+              </ul>
+            )}
+            {pages[currentPage] === '/chat' && (
+              <ul className="absolute left-0 mt-1 hidden group-hover:block bg-white border border-gray-300 shadow-md w-30">
+                <li><Link to="#" className="block px-4 py-2 hover:bg-blue-200">Novo</Link></li>
+                <li><Link to="#" className="block px-4 py-2 hover:bg-blue-200">Abrir</Link></li>
+                <li><Link to="#" className="block px-4 py-2 hover:bg-blue-200">Salvar</Link></li>
+              </ul>
+            )}
           </li>
           <li className='hover:bg-light-blue rounded relative group'>
-            <Link to="#" className='p-2'>Contatos</Link>
+
             {/* Dropdown */}
-            <ul className="absolute left-0 mt-1 hidden group-hover:block bg-white border border-gray-300 shadow-md w-55">
-              <li><Link to="#" className="block px-4 py-2 hover:bg-blue-200">Adicionar Novo Contato</Link></li>
-              <li><Link to="#" className="block px-4 py-2 hover:bg-blue-200">Bloquear Contato</Link></li>
-            </ul>
+            {pages[currentPage] != '/' && (
+              <>
+                <Link to="#" className='p-2'>Contatos</Link>
+                <ul className="absolute left-0 mt-1 hidden group-hover:block bg-white border border-gray-300 shadow-md w-55">
+                  <li><Link to="#" className="block px-4 py-2 hover:bg-blue-200">Adicionar Novo Contato</Link></li>
+                  <li><Link to="#" className="block px-4 py-2 hover:bg-blue-200">Bloquear Contato</Link></li>
+                </ul>
+              </>
+            )}
+
           </li>
           <li className='hover:bg-light-blue rounded relative group'>
             <Link to="#" className='p-2'>Ações</Link>
             {/* Dropdown */}
-            <ul className="absolute left-0 mt-1 hidden group-hover:block bg-white border border-gray-300 shadow-md w-40">
-              <li><Link to="#" className="block px-4 py-2 hover:bg-blue-200">Chamar Atenção</Link></li>
-              <li><Link to="#" className="block px-4 py-2 hover:bg-blue-200">Iniciar Conversa</Link></li>
-            </ul>
+            {pages[currentPage] === '/' && (
+              <ul className="absolute left-0 mt-1 hidden group-hover:block bg-white border border-gray-300 shadow-md w-50">
+                <li><Link to="#" className="block px-4 py-2 hover:bg-blue-200">Esqueceu sua senha?</Link></li>
+              </ul>
+
+            )}
+            {pages[currentPage] === '/chat' && (
+              <ul className="absolute left-0 mt-1 hidden group-hover:block bg-white border border-gray-300 shadow-md w-40">
+                <li><Link to="#" className="block px-4 py-2 hover:bg-blue-200">Chamar Atenção</Link></li>
+                <li><Link to="#" className="block px-4 py-2 hover:bg-blue-200">Iniciar Conversa</Link></li>
+              </ul>
+            )}
           </li>
-          <li className='hover:bg-light-blue rounded'>
+          {/* ainda vou pensar o que vou por nesse menu */}
+          {/* <li className='hover:bg-light-blue rounded'>
             <Link to="#" className='p-2'>Ferramentas</Link>
-          </li>
-          <li className='hover:bg-light-blue rounded'>
-            <span to="#" onClick={handleLogOff} className='p-2 cursor-pointer'>Sair</span>
-          </li>
+          </li> */}
+          {pages[currentPage] != '/' && (
+            <li className='hover:bg-light-blue rounded'>
+              <span to="#" onClick={handleLogOff} className='p-2 cursor-pointer'>Sair</span>
+            </li>
+          )}
         </ul>
-      </div>
-    </header>
+      </div >
+    </header >
 
   )
 }
